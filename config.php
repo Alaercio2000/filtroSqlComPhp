@@ -6,7 +6,6 @@ $passwordDb = "";
 
 try {
     $pdo = new PDO($db,$userDb,$passwordDb);
-    header("Location: index.php");
 } catch (PDOException $e) {
     echo ("Deu Ruim Parça" .$e->getMessage());
     header("Location: createBanco.php");

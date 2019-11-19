@@ -1,6 +1,27 @@
 <?php
 require("config.php");
 require("funcoes.php");
+
+if($_POST){
+    if ($_POST['data']) {
+        $filtro1 =utf8_decode("o.data = "."'".$_POST['data']."'");
+    }else{
+        $filtro1 =utf8_decode("o.data != "."'".$_POST['data']."'");
+    }
+
+    if ($_POST['bairro']) {
+        $filtro2 =utf8_decode("b.nome = "."'".$_POST['bairro']."'");
+    }else{
+        $filtro2 =utf8_decode("b.nome != "."'".$_POST['bairro']."'");
+    }
+
+    if ($_POST['tipoOs']) {
+        $filtro3 =utf8_decode("t.nome = "."'".$_POST['tipoOs']."'");
+    }else{
+        $filtro3 =utf8_decode("t.nome != "."'".$_POST['tipoOs']."'");
+    }
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,40 +33,35 @@ require("funcoes.php");
     <title>Filtro Sql Com Php</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-        #resultadoTable{
-            max-height: 600px;
+        #resultadoTable {
+            max-height: 635px;
             overflow: auto;
-            margin-top: 40px;
+            margin: 40px 0px;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
+        <h1 class="text-center py-4">Relatório De OS</h1>
         <form method="POST">
             <div class="row mt-3 justify-content-center">
-                <div class="col-lg-2 col-sm-4 my-2">
-                    <select class="form-control">
-                        <option>Data</option>
-                        <option>17/11/2019</option>
-                        <option>18/11/2019</option>
+                <div class="col-lg-3 col-sm-4 my-2">
+                    <select name="data" class="form-control">
+                        <option value="">Data</option>
+                        <option value="2019-11-17" >17/11/2019</option>
+                        <option value="2019-11-18" >18/11/2019</option>
                     </select>
                 </div>
-                <div class="col-lg-4 col-sm-8 my-2">
-                    <select class="form-control">
-                        <option>Bairro</option>
+                <div class="col-lg-5 col-sm-8 my-2">
+                    <select name="bairro" class="form-control">
+                        <option value="">Bairro</option>
                         <?= trazerDados('bairros', 'nome', $pdo); ?>
                     </select>
                 </div>
-                <div class="col-lg-2 col-sm-4 my-2">
-                    <select class="form-control">
-                        <option>Equipe</option>
-                        <?= trazerDados('equipes', 'nome', $pdo); ?>
-                    </select>
-                </div>
                 <div class="col-lg-4 col-sm-8 my-2">
-                    <select class="form-control">
-                        <option>Tipos De OS</option>
+                    <select name="tipoOs" class="form-control">
+                        <option value="">Tipos De OS</option>
                         <?= trazerDados('tipos_de_os', 'nome', $pdo); ?>
                     </select>
                 </div>
@@ -55,10 +71,10 @@ require("funcoes.php");
             </div>
         </form>
         <div id="resultadoTable" class="table-resposive">
-            <table class="table text-center table-bordered">
+            <table class="table text-center table-bordered table-striped">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">Endereco</th>
+                        <th scope="col">Endereço</th>
                         <th scope="col">Bairro</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Duração(Prevista)</th>
@@ -67,8 +83,13 @@ require("funcoes.php");
                         <th scope="col">Data</th>
                     </tr>
                 </thead>
-                <tbody class=" table-hover">
-                    <?= filtroSimples('oss',$pdo) ?>
+                <tbody>
+                        <?php 
+                        if (empty($filtro1) == false) {
+                            filtroSimples($pdo , $filtro1 , $filtro2 , $filtro3);
+                        }                          
+                        ?>
+                     
                 </tbody>
             </table>
         </div>

@@ -5,10 +5,11 @@ $userDb = "root";
 $passwordDb = "";
 
 try {
-    $pdo = new PDO($db,$userDb,$passwordDb);
-    $sql = "
+    $pdo = new PDO($db, $userDb, $passwordDb);
     
-        create database osmakers;
+    $sql = utf8_decode("
+    
+        CREATE DATABASE osmakers CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; 
         use osmakers;
 
         create table equipes(
@@ -238,10 +239,9 @@ try {
         (1,39),
         (2,40);
 
-    ";
+    ");
     $sql = $pdo->query($sql);
     header("Location: index.php");
-
 } catch (PDOException $e) {
-    echo ("Deu Ruim Parça" .$e->getMessage());
+    echo ("Deu Ruim Parça" . $e->getMessage());
 }

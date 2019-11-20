@@ -9,7 +9,7 @@ try {
     
     $sql = utf8_decode("
     
-        CREATE DATABASE osmakers CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; 
+        CREATE DATABASE osmakers CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
         use osmakers;
 
         create table equipes(

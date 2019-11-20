@@ -7,7 +7,7 @@ $passwordDb = "";
 try {
     $pdo = new PDO($db, $userDb, $passwordDb);
     
-    $sql = utf8_decode("
+    $sql = utf8_encode("
     
         CREATE DATABASE osmakers CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
         use osmakers;
